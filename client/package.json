@@ -1,0 +1,51 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "maintainers": [
+    {
+      "name": "Froala Labs"
+    }
+  ],
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.18.0",
+    "capitalize": "^2.0.0",
+    "froala-design-blocks": "github:froala/design-blocks#dev",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-google-maps-loader": "^4.2.3",
+    "react-google-places-suggest": "^3.5.1",
+    "react-icons": "^3.5.0",
+    "react-iframe": "^1.3.3",
+    "react-redux": "^5.1.1",
+    "react-responsive-modal": "^3.5.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-slick": "^0.23.2",
+    "redux": "^4.0.1",
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.3.0",
+    "replace-in-file": "^3.4.2",
+    "slick-carousel": "^1.8.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
