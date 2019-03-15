@@ -22,6 +22,7 @@ class SignupChoice extends Component {
                                     véhicule en échange?
                                 </p>
                                 <Link to='/signup/drivers'
+                                      name="btnDriverChoice"
                                       className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
                             </figure>
                         </div>
@@ -39,6 +40,7 @@ class SignupChoice extends Component {
                                     échange d'un chauffeur !
                                 </p>
                                 <Link to='/signup/lenders'
+                                      name="btnLenderChoice"
                                       className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
                             </figure>
                         </div>

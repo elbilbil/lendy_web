@@ -66,7 +66,7 @@ class Signin extends Component {
                                         </div>
                                         <div className="row mt-4">
                                             <div className="col">
-                                                <button className="btn btn-secondary" type="submit">Submit</button>
+                                                <button name="btnSubmit" className="btn btn-secondary" type="submit">Submit</button>
                                             </div>
                                         </div>
                                     </form>
