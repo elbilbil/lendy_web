@@ -115,7 +115,7 @@ class Signup extends Component {
                                         </div>
                                         <div className="row mt-4">
                                             <div className="col">
-                                                <button className="btn btn-secondary" type="submit">Créer un compte</button>
+                                                <button name="btnCUC" className="btn btn-secondary" type="submit">Créer un compte</button>
                                             </div>
                                         </div>
                                     </form>

@@ -27,11 +27,11 @@ class Header extends Component{
                 <div className="collapse navbar-collapse navbar-collapse-4">
                     <ul className="navbar-nav ml-auto justify-content-end">
                         <li className="nav-item">
-                            <Link className="btn btn-primary ml-md-3" to='/signin'>Se connecter</Link>
+                            <Link name="btnConnect" className="btn btn-primary ml-md-3" to='/signin'>Se connecter</Link>
                         </li>
                     </ul>
 
-                    <Link className="btn btn-primary ml-md-3" to='/signup'>Créer un compte</Link>
+                    <Link name="btnCreateAccount" className="btn btn-primary ml-md-3" to='/signup'>Créer un compte</Link>
                 </div>
             );
         }

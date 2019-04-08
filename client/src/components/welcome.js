@@ -63,6 +63,7 @@ class Welcome extends Component {
                                             véhicule en échange?
                                         </p>
                                         <Link to='/signup/drivers'
+                                              name="btnDriver"
                                               className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
                                     </figure>
                                 </div>
@@ -81,6 +82,7 @@ class Welcome extends Component {
                                             échange d'un chauffeur !
                                         </p>
                                         <Link to='/signup/lenders'
+                                              name="btnLender"
                                               className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
                                     </figure>
                                 </div>
