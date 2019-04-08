@@ -5254,12 +5254,12 @@ p.tabtext {
 }
 
 #sidebar-left {
-    padding: 0px;
+    padding: 10px;
     background-color: #F0F0EC;
-    border-radius: 4px;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 50px;
     z-index: 100;
+    max-height: fit-content;
     /*left: 10px;*/
 }
 
@@ -5320,7 +5320,7 @@ p.tabtext {
 }
 
 .search-scroll-bar .panel {
-    box-shadow: 0 1px 3px rgba(49, 49, 49, 0.16), 0 1px 2px rgba(49, 49, 49, 0.23);
+   /* box-shadow: 0 1px 3px rgba(49, 49, 49, 0.16), 0 1px 2px rgba(49, 49, 49, 0.23);*/
 }
 
 .search-scroll-bar .panel .panel-heading {
@@ -5340,7 +5340,7 @@ p.tabtext {
 
 .search-scroll-bar .panel h1, .search-scroll-bar .panel h2, .search-scroll-bar .panel .panel-body a.link-title, a.link-title, #deplace2 label {
     font-family: 'Raleway', sans-serif;
-    color: #e36a02;
+    color: #f26d7d;
     margin-bottom: 0;
     line-height: 20px;
     margin-top: 5px;
@@ -14108,4 +14108,18 @@ span.time-span {
 
 .photo-message {
     width: 70%;
+}
+
+
+.rangeslider-horizontal .rangeslider__fill {
+    background-color: #f26d7d !important;
+}
+
+.search-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.google-search {
+    margin-bottom: 20px;
 }

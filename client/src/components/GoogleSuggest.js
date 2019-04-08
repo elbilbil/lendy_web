@@ -18,7 +18,7 @@ export default class GoogleSuggest extends React.Component {
     }
 
     handleSelectSuggest = (geocodedPrediction, originalPrediction) => {
-        this.props.callback(geocodedPrediction.geometry.location.lat(), geocodedPrediction.geometry.location.lng());
+       // this.props.callback(geocodedPrediction.geometry.location.lat(), geocodedPrediction.geometry.location.lng());
 
         this.setState({search: "", value: geocodedPrediction.formatted_address})
     }
@@ -67,7 +67,7 @@ export default class GoogleSuggest extends React.Component {
                             )}
                         >
                             <input
-                                className="form-control"
+                                className="form-control google-search"
                                 type="text"
                                 value={value}
                                 placeholder="Votre adresse"

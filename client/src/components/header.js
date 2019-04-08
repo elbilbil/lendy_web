@@ -10,6 +10,9 @@ class Header extends Component{
                 <div className="collapse navbar-collapse navbar-collapse-4">
                     <ul className="navbar-nav ml-auto justify-content-end">
                         <li className="nav-item">
+                            <Link className="btn btn-primary ml-md-3" to='/search'>Rechercher</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link className="btn btn-primary ml-md-3" to='/update-profile'>Mon Profil</Link>
                         </li>
                         <li className="nav-item">
