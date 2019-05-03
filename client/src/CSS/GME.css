@@ -4362,7 +4362,7 @@ p.tabtext {
 .message_rightside_box01_left02 button {
     /* float: right; */
     background: #16a6bb;
-    background: linear-gradient(to right, #16a6bb 0%, #aad6de 100%);
+    background: linear-gradient(to right, #1a136c 0%, #ADBAFF 100%);
     /* border: 1px solid #dfe2df; */
     border: none;
     box-sizing: border-box;

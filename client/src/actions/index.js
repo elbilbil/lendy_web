@@ -2,13 +2,13 @@ import {AUTH_USER, AUTH_ERROR, GET_DRIVERS, GET_MYSELF, GET_LENDERS} from "./typ
 
 import axios from 'axios';
 const TOKEN = '?access_token=9C9dCYXB222oI2gCmuWq87kMJ5IF3xx9Lw9O9rv2suIuMOI6imVJ30393zL30L4V';
-const BASE_URL = 'http://localhost:27031/api';
+const BASE_URL = 'http://api.lendy.fr:27031/api';
 export * from './carApiActions';
 
 export const signup = (formProps, callback) => async dispatch => {
     try {
         const response = await axios.post(
-            'http://localhost:27031/api/users/register',
+            BASE_URL+'/users/register',
             formProps
         );
 
@@ -23,7 +23,7 @@ export const signup = (formProps, callback) => async dispatch => {
 export const signin = (formProps, callback) => async dispatch => {
     try {
         const response = await axios.post(
-            'http://localhost:27031/api/users/login',
+            BASE_URL+'/users/login',
             formProps
         );
 
@@ -36,7 +36,7 @@ export const signin = (formProps, callback) => async dispatch => {
 };
 
 export const getDrivers = (callback) => async dispatch => {
-    let webApiUrl = 'http://localhost:27031/api/users/drivers';
+    let webApiUrl = BASE_URL+'/users/drivers';
     let tokenStr = localStorage.getItem('token');
     try {
         const response = await axios.get(
@@ -53,7 +53,7 @@ export const getDrivers = (callback) => async dispatch => {
 };
 
 export const getLenders = (callback) => async dispatch => {
-    let webApiUrl = 'http://localhost:27031/api/users/lenders';
+    let webApiUrl = BASE_URL+'/users/lenders';
     let tokenStr = localStorage.getItem('token');
     try {
         const response = await axios.get(
@@ -70,7 +70,7 @@ export const getLenders = (callback) => async dispatch => {
 };
 
 export const getMyself = (callback) => async dispatch => {
-    let webApiUrl = 'http://localhost:27031/api/users/myself';
+    let webApiUrl = BASE_URL+'/users/myself';
     let tokenStr = localStorage.getItem('token');
     try {
         const response = await axios.get(
@@ -87,7 +87,7 @@ export const getMyself = (callback) => async dispatch => {
 };
 
 export const setCarUser = (values, callback) => async dispatch => {
-    let webApiUrl = 'http://localhost:27031/api/users/update';
+    let webApiUrl = BASE_URL+'/users/update';
     let tokenStr = localStorage.getItem('token');
     try {
         const response = await axios.patch(
@@ -105,7 +105,7 @@ export const setCarUser = (values, callback) => async dispatch => {
 };
 
 export const updateUser = (values, callback) => async dispatch => {
-    let webApiUrl = 'http://localhost:27031/api/users/update';
+    let webApiUrl = BASE_URL+'/users/update';
     let tokenStr = localStorage.getItem('token');
     try {
         const response = await axios.patch(

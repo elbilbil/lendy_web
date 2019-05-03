@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import requireAuth from './requireAuth';
 import {connect} from 'react-redux';
-import Carousel from './Carousel';
-import ConversationsDashboard from './ConversationsDashboard'
-import GoogleSuggest from './GoogleSuggest'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {Link} from "react-router-dom";
 import '../CSS/GME.css'
 import SearchBar from "./SearchBar";
 import SearchResults from './SearchResults'

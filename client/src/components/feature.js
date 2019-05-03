@@ -20,12 +20,14 @@ class Feature extends Component{
     componentDidMount(){
         if (this.props.myself.myself === "")
             this.props.getMyself(() => {
-                if (this.props.myself.myself.isDriver === 0)
+                console.log(this.props.myself.myself);
+                if (this.props.myself.myself.type === "preteur")
                     this.props.history.push('/dashboard-preteur');
                 this.props.getLenders(() => {});
             });
         else {
-            if (this.props.myself.myself.isDriver === 0)
+            console.log(this.props.myself.myself);
+            if (this.props.myself.myself.type === "preteur")
                 this.props.history.push('/dashboard-preteur');
             this.props.getLenders(() => {});
         }
@@ -56,7 +58,7 @@ class Feature extends Component{
     renderName = () => {
       if(this.props.myself.myself !== "")
       {
-          let name = this.props.myself.myself.firstName;
+          let name = this.props.myself.myself.firstname;
           return name.charAt(0).toUpperCase() + name.slice(1);
       }
       else
@@ -74,7 +76,7 @@ class Feature extends Component{
                                 <img alt="image" className="img-fluid rounded-0" src="/assets/people/6.jpg" />
 
                                 <div className="content p-3">
-                                    <h3><strong>{lender.firstName} {lender.lastName}</strong></h3>
+                                    <h3><strong>{lender.firstname} {lender.lastname}</strong></h3>
                                     <p>Voiture: {lender.cars}</p>
                                 </div>
                             </div>

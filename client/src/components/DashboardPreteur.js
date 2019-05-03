@@ -69,7 +69,7 @@ class DashboardPreteur extends Component {
                                 <img alt="image" className="img-fluid rounded-0" src="/assets/people/6.jpg"/>
 
                                 <div className="content p-3">
-                                    <h3><strong>{driver.firstName} {driver.lastName}</strong></h3>
+                                    <h3><strong>{driver.firstname} {driver.lastname}</strong></h3>
                                     <p>Voiture: {driver.cars}</p>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@ class DashboardPreteur extends Component {
 
     renderName = () => {
         if (this.props.myself.myself !== "") {
-            let name = this.props.myself.myself.firstName;
+            let name = this.props.myself.myself.firstname;
             return name.charAt(0).toUpperCase() + name.slice(1);
         }
         else

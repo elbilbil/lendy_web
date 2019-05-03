@@ -29,7 +29,7 @@ export default class ConversationsDashboard extends Component {
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </p>
-                            <a className="txt-link show-msg show-msg-{{ loop.index }}">Voir le message</a>
+                            <Link className="txt-link show-msg show-msg-{{ loop.index }}" to={'/message'}>Voir le message</Link>
                             <a className="txt-link hide-msg hide-msg-{{ loop.index }}">Masquer le message</a>
                             <p>&nbsp;</p>
                         </div>

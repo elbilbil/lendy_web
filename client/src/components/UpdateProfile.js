@@ -50,8 +50,8 @@ class UpdateProfile extends Component {
 
     handleInitialize() {
         const initData = {
-            "firstName": this.props.myself.myself.firstName,
-            "lastName": this.props.myself.myself.lastName,
+            "firstname": this.props.myself.myself.firstname,
+            "lastname": this.props.myself.myself.lastname,
             "username": this.props.myself.myself.username,
         };
 
@@ -248,7 +248,7 @@ class UpdateProfile extends Component {
                                     <fieldset>
                                         Prénom
                                         <Field
-                                            name='firstName'
+                                            name='firstname'
                                             type='text'
                                             autoComplete='off'
                                             className="form-control"
@@ -261,7 +261,7 @@ class UpdateProfile extends Component {
                                     <fieldset>
                                         Nom
                                         <Field
-                                            name='lastName'
+                                            name='lastname'
                                             type='text'
                                             autoComplete='off'
                                             className="form-control"
@@ -309,22 +309,22 @@ function validate(values){
     const errors = {};
 
 
-    if (!values.firstName)
+    if (!values.firstname)
     {
-        errors.firstName = 'Ajoutez un prénom';
+        errors.firstname = 'Ajoutez un prénom';
     }
-    if (values.firstName && values.firstName.length < 3)
+    if (values.firstname && values.firstname.length < 3)
     {
-        errors.firstName = 'Ajoutez un prénom de plus de 3 caractères';
+        errors.firstname = 'Ajoutez un prénom de plus de 3 caractères';
     }
 
-    if (!values.lastName)
+    if (!values.lastname)
     {
-        errors.lastName = 'Ajoutez un nom';
+        errors.lastname = 'Ajoutez un nom';
     }
-    if ( values.lastName &&  values.lastName.length < 3)
+    if ( values.lastname &&  values.lastname.length < 3)
     {
-        errors.lastName = 'Ajoutez un nom de plus de 3 caractères';
+        errors.lastname = 'Ajoutez un nom de plus de 3 caractères';
     }
 
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

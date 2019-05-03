@@ -19,6 +19,7 @@ import DashboardPreteur from "./components/DashboardPreteur";
 import UpdateProfile from "./components/UpdateProfile";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
+import Messagerie from "./components/Messagerie";
 
 
 const store = createStore(reducers, {
@@ -40,6 +41,7 @@ ReactDOM.render(
                 <Route path="/update-profile" exact component={UpdateProfile} />
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/search" exact component={Search} />
+                <Route path="/message" exact component={Messagerie} />
             </App>
         </BrowserRouter>
     </Provider>,

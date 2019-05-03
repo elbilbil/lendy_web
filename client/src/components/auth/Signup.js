@@ -20,17 +20,15 @@ class Signup extends Component {
 
     onSubmit = (formProps) => {
         var isDriver;
-        this.state.type === 'preteur' ? isDriver = 0 : isDriver = 1;
         formProps = {
             ...formProps,
             address: ' ',
-            isDriver: isDriver,
             type: this.state.type
         };
         //console.log(formProps);
         this.props.signup(formProps, () => {
             this.props.getMyself(() => {
-                if (this.props.myself.myself.isDriver === 0)
+                if (this.props.myself.myself.type === "preteur")
                     this.props.history.push('/dashboard-preteur');
                 else
                     this.props.history.push('/feature');
@@ -66,7 +64,7 @@ class Signup extends Component {
                                         <div className="col mt-4" style={{paddingLeft : "0"}}>
                                             <fieldset>
                                                 <Field
-                                                    name='firstName'
+                                                    name='firstname'
                                                     type='text'
                                                     autoComplete='off'
                                                     className="form-control"
@@ -78,7 +76,7 @@ class Signup extends Component {
                                         <div className="col mt-4" style={{paddingLeft : "0"}}>
                                             <fieldset>
                                                 <Field
-                                                    name='lastName'
+                                                    name='lastname'
                                                     type='text'
                                                     autoComplete='off'
                                                     className="form-control"
@@ -135,22 +133,22 @@ function validate(values){
     const errors = {};
 
 
-    if (!values.firstName)
+    if (!values.firstname)
     {
-        errors.firstName = 'Ajoutez un prénom';
+        errors.firstname = 'Ajoutez un prénom';
     }
-    if (values.firstName && values.firstName.length < 3)
+    if (values.firstname && values.firstname.length < 3)
     {
-        errors.firstName = 'Ajoutez un prénom de plus de 3 caractères';
+        errors.firstname = 'Ajoutez un prénom de plus de 3 caractères';
     }
 
-    if (!values.lastName)
+    if (!values.lastname)
     {
-        errors.lastName = 'Ajoutez un nom';
+        errors.lastname = 'Ajoutez un nom';
     }
-    if ( values.lastName &&  values.lastName.length < 3)
+    if ( values.lastname &&  values.lastname.length < 3)
     {
-        errors.lastName = 'Ajoutez un nom de plus de 3 caractères';
+        errors.lastname = 'Ajoutez un nom de plus de 3 caractères';
     }
 
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
