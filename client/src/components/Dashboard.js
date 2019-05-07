@@ -101,6 +101,77 @@ class Dashboard extends Component {
         return this.state.listFound;
     };
 
+    renderMyAdvert(){
+        if (this.props.myself.myself === "")
+            return '';
+        else
+        {
+            if (this.props.myself.myself.adTitle !== '' && this.props.myself.myself.adDescription !== '')
+            {
+                return (
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <div className="mid_post_sec">
+                                <div className="mid_post_sec001">
+                                    <div className="mid_post_sub latest_messagetext my-advert-ctn">
+                                        <div className="inside">
+
+                                        </div>
+                                        <span className="clearfix"></span>
+
+
+                                        <div className="latest_message_sec row">
+                                            <div className="latest_message_sub">
+                                                <div className="latest_message_messcoll_00">
+                                                    <div className="latest_message_messcoll_sub row">
+                                                        <div className="col-md-12">
+
+                                                            <h3>
+                                                                <a href="{{ path('gme_platform_viewadvert', {'type': user.typeGardePrincipal, 'ville': user.villePrincipale, 'id': user.id, 'title': user.slug }) }}">
+                                                                    {this.props.myself.myself.adTitle}
+                                                                </a>
+                                                            </h3>
+
+                                                            <p>
+                                                                {this.props.myself.myself.adDescription}
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-6">
+                                                            <Link className="btn btn-primary ml-md-3" to='/profile' style={{marginBottom: '5%'}}>Mon Profil</Link>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <Link className="btn btn-primary ml-md-3" to='/update-profile'>Modifier</Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                )
+            }
+            else
+            {
+                return (
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <div className="col-12">
+                                <Link className="btn btn-primary ml-md-3" to='/update-profile'>Déposer une annonce</Link>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        }
+    }
+
     render() {
         return (
             <div>
@@ -142,58 +213,7 @@ class Dashboard extends Component {
                                 <h2 style={{textAlign: 'center'}}>Mon annonce</h2>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-12 text-center">
-                                <div className="mid_post_sec">
-                                    <div className="mid_post_sec001">
-                                        <div className="mid_post_sub latest_messagetext my-advert-ctn">
-                                            <div className="inside">
-
-                                            </div>
-                                            <span className="clearfix"></span>
-
-
-                                            <div className="latest_message_sec row">
-                                                <div className="latest_message_sub">
-                                                    <div className="latest_message_messcoll_00">
-                                                        <div className="latest_message_messcoll_sub row">
-                                                            <div className="col-md-12">
-
-                                                                <h3>
-                                                                    <a href="{{ path('gme_platform_viewadvert', {'type': user.typeGardePrincipal, 'ville': user.villePrincipale, 'id': user.id, 'title': user.slug }) }}">
-                                                                        Titre de l'annonce
-                                                                    </a>
-                                                                </h3>
-
-                                                                <p>
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                                                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                                                    culpa qui officia deserunt mollit anim id est laborum.
-                                                                </p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-6">
-                                                                <Link className="btn btn-primary ml-md-3" to='/profile' style={{marginBottom: '5%'}}>Mon Profil</Link>
-                                                            </div>
-                                                            <div className="col-6">
-                                                                <Link className="btn btn-primary ml-md-3" to='/update-profile'>Modifier</Link>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        {this.renderMyAdvert()}
 
                     </section>
 

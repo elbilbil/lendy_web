@@ -34,7 +34,8 @@ class SearchResults extends Component {
                     <div className="col-md-12" style={{textAlign: 'center'}}>
                         <h3>Oops! Aucun résultat ici...</h3>
                     </div>
-                )
+                );
+
             return (
                     list.map(l => (
                         <div className="col-md-6 card-carousel text-left" key={l._id}>

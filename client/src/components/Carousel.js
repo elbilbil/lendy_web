@@ -11,33 +11,7 @@ export default class Carousel extends Component {
     }
 
     componentDidMount() {
-        if (this.props.myself.myself === "")
-            this.props.getMyself(() => {
-                if (this.props.myself.myself.type === "preteur")
-                {
-                    this.props.getDrivers(() => {
-                        this.setState({listFound: this.props.drivers.drivers});
-                        console.log(this.props.drivers);
-                    });
-                }
-                else {
-                    this.props.getLenders(() => {
-                        this.setState({listFound: this.props.lenders.lenders});
-                    });
-                }
-            });
-        else {
-            if (this.props.myself.myself.type === "preteur") {
-                this.props.getDrivers(() => {
-                    this.setState({listFound: this.props.drivers.drivers});
-                });
-            }
-            else {
-                this.props.getLenders(() => {
-                    this.setState({listFound: this.props.lenders.lenders});
-                });
-            }
-        }
+
     }
 
 
