@@ -7,7 +7,7 @@ class Welcome extends Component {
     componentDidMount(){
         if (this.props.authenticated)
         {
-            this.props.history.push('/feature');
+            this.props.history.push('/dashboard');
         }
     }
 

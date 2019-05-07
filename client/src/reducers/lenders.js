@@ -1,8 +1,7 @@
 import {GET_LENDERS} from "../actions/types";
 
 const INITIAL_STATE = {
-    lenders: '',
-    myself: ''
+    lenders: ''
 };
 
 export default function(state = INITIAL_STATE, action){

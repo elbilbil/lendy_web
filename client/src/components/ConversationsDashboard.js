@@ -1,8 +1,25 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
+import connect from "react-redux/es/connect/connect";
+import requireAuth from "./requireAuth";
 
 
-export default class ConversationsDashboard extends Component {
+class ConversationsDashboard extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        if (this.props.conversations.unread === "")
+            this.props.unreadMessages(() => {
+                console.log(this.props.conversations);
+            });
+        else
+            this.props.unreadMessages(() => {
+                console.log(this.props.conversations);
+            });
+    }
+
     render() {
         return (
             <section className="container">
@@ -44,3 +61,12 @@ export default class ConversationsDashboard extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        conversations: state.conversations
+    }
+}
+
+
+export default connect(mapStateToProps)(requireAuth(ConversationsDashboard));

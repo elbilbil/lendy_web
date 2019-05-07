@@ -22,13 +22,13 @@ class Feature extends Component{
             this.props.getMyself(() => {
                 console.log(this.props.myself.myself);
                 if (this.props.myself.myself.type === "preteur")
-                    this.props.history.push('/dashboard-preteur');
+                    this.props.history.push('/dashboard');
                 this.props.getLenders(() => {});
             });
         else {
             console.log(this.props.myself.myself);
             if (this.props.myself.myself.type === "preteur")
-                this.props.history.push('/dashboard-preteur');
+                this.props.history.push('/dashboard');
             this.props.getLenders(() => {});
         }
     }

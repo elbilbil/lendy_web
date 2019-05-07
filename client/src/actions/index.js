@@ -2,8 +2,11 @@ import {AUTH_USER, AUTH_ERROR, GET_DRIVERS, GET_MYSELF, GET_LENDERS} from "./typ
 
 import axios from 'axios';
 const TOKEN = '?access_token=9C9dCYXB222oI2gCmuWq87kMJ5IF3xx9Lw9O9rv2suIuMOI6imVJ30393zL30L4V';
-const BASE_URL = 'http://api.lendy.fr:27031/api';
+//const BASE_URL = 'http://api.lendy.fr:27031/api';
+const BASE_URL = 'http://localhost:27031/api';
 export * from './carApiActions';
+export * from './conversationActions';
+
 
 export const signup = (formProps, callback) => async dispatch => {
     try {
@@ -31,17 +34,21 @@ export const signin = (formProps, callback) => async dispatch => {
         localStorage.setItem('token', response.data.token);
         callback();
     } catch (e) {
-        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials'});
     }
 };
 
-export const getDrivers = (callback) => async dispatch => {
+export const getDrivers = (callback, params) => async dispatch => {
     let webApiUrl = BASE_URL+'/users/drivers';
     let tokenStr = localStorage.getItem('token');
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenStr}`
+    }
     try {
         const response = await axios.get(
             webApiUrl,
-            {headers: {"Authorization": `Bearer ${tokenStr}`}}
+            {headers: headers, params: params}
             );
         dispatch({ type: GET_DRIVERS, payload: response.data });
         callback();
@@ -52,13 +59,17 @@ export const getDrivers = (callback) => async dispatch => {
     }
 };
 
-export const getLenders = (callback) => async dispatch => {
+export const getLenders = (callback, params) => async dispatch => {
     let webApiUrl = BASE_URL+'/users/lenders';
     let tokenStr = localStorage.getItem('token');
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenStr}`
+    }
     try {
         const response = await axios.get(
             webApiUrl,
-            {headers: {"Authorization": `Bearer ${tokenStr}`}}
+            {headers: headers, params: params}
         );
         dispatch({ type: GET_LENDERS, payload: response.data });
         callback();
@@ -72,6 +83,7 @@ export const getLenders = (callback) => async dispatch => {
 export const getMyself = (callback) => async dispatch => {
     let webApiUrl = BASE_URL+'/users/myself';
     let tokenStr = localStorage.getItem('token');
+    console.log(tokenStr);
     try {
         const response = await axios.get(
             webApiUrl,
@@ -121,63 +133,6 @@ export const updateUser = (values, callback) => async dispatch => {
         console.log(e);
     }
 };
-
-
-//export const signup = ({email, password}) => {
-  //return (dispatch) => {
-
-  //}
-//};
-//Meme syntaxe en plus simplifié pour la déclaration avec redux-thunk:
-// double fat arrow en cascade == fonction qui return une autre fonction
-
-
-/*export const signup = (formProps, type, callback) => async dispatch => {
-
-    formProps = {
-        ...formProps,
-        'role' : type
-    };
-
-    const req = `${BASE_URL}/utilisateurs${TOKEN}`;
-      try {
-          const response = await axios.post(
-              req,
-              formProps); // formProps = values du form, en l'occurence mail et password
-            console.log(response);
-          dispatch({
-              type: AUTH_USER,
-              payload: response.data.id
-          });
-          localStorage.setItem('token', response.data.id);
-          callback();
-      } catch (e){
-          dispatch({
-              type: AUTH_ERROR,
-              payload: 'Email in use'
-          })
-      }
-};
-
-export const signin = (formProps, callback) => async dispatch => {
-    try {
-        const response = await axios.post(
-            'http://localhost:3090/signin',
-            formProps); // formProps = values du form, en l'occurence mail et password
-
-        dispatch({
-            type: AUTH_USER,
-            payload: response.data.token
-        });
-        localStorage.setItem('token', response.data.token);
-        callback();
-    } catch (e){
-        dispatch({
-            type: AUTH_ERROR,
-            payload: 'Invalid login credentials'
-        })
-    }
-};*/
 
 export const signout = () => {
     localStorage.removeItem('token');

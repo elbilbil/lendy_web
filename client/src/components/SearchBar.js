@@ -13,20 +13,17 @@ class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 10,
-            startDate: new Date()
+            distance: 10,
+            latitude: '',
+            longitude: '',
         }
+        this.doSearch = this.doSearch.bind(this);
+        this.setLatLng = this.setLatLng.bind(this);
     }
 
-    handleChange = value => {
+    handleChange = distance => {
         this.setState({
-            value: value
-        })
-    };
-
-    handleChangeDate = value => {
-        this.setState({
-            startDate: value
+            distance: distance
         })
     };
 
@@ -34,9 +31,21 @@ class SearchBar extends Component {
 
     }
 
+    setLatLng(val){
+        this.setState({
+            latitude: val.lat,
+            longitude: val.lng
+        })
+    }
+
+
+    doSearch()
+    {
+        this.props.search(this.state);
+    }
 
     render() {
-        const { value } = this.state
+        const { distance } = this.state;
 
         return (
 
@@ -53,34 +62,26 @@ class SearchBar extends Component {
 
                                     <div id="deplace2">
                                         <h2>Autour de</h2>
-                                        <GoogleSuggest />
+                                        <GoogleSuggest setLatLng={this.setLatLng} />
                                     </div>
-                                    <p>
-                                        <h2>Distance maximum</h2>
-                                        <input type="text" id="amount" readonly="readonly" hidden="hidden" />
-                                        <div className='value'>{value}<span>km</span></div>
-                                    </p>
+                                    <h2>Distance maximum</h2>
+                                    <input type="text" id="amount" readOnly="readonly" hidden="hidden" />
+                                    <div className='value'>{distance}<span>km</span></div>
                                     <div className='slider'>
                                         <Slider
                                             min={0}
                                             max={50}
-                                            value={value}
+                                            value={distance}
                                             onChangeStart={this.handleChangeStart}
                                             onChange={this.handleChange}
                                             onChangeComplete={this.handleChangeComplete}
                                         />
                                     </div>
 
-                                    <h2>Disponible à partir du</h2>
-                                    <DatePicker
-                                        selected={this.state.startDate}
-                                        onChange={this.handleChangeDate}
-                                        className="form-control"
-                                        dateFormat="dd/MM/yyyy"
-                                    />
                                     <button type="button" id="search_advert_form_Rechercher"
                                             name="search_advert_form[Rechercher]"
-                                            className="btn btn-primary search-btn">Rechercher
+                                            className="btn btn-primary search-btn"
+                                            onClick={this.doSearch}>Rechercher
                                     </button>
                                 </div>
 

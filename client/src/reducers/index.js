@@ -6,6 +6,7 @@ import drivers from './drivers';
 import lenders from './lenders';
 import myself from './user';
 import carApi from './carsApi';
+import conversations from './conversations'
 
 export default combineReducers({
     auth: auth,
@@ -13,5 +14,6 @@ export default combineReducers({
     drivers: drivers,
     myself: myself,
     carApi: carApi,
-    lenders: lenders
+    lenders: lenders,
+    conversations: conversations
 });

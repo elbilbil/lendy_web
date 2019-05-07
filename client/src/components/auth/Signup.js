@@ -28,10 +28,7 @@ class Signup extends Component {
         //console.log(formProps);
         this.props.signup(formProps, () => {
             this.props.getMyself(() => {
-                if (this.props.myself.myself.type === "preteur")
-                    this.props.history.push('/dashboard-preteur');
-                else
-                    this.props.history.push('/feature');
+                this.props.history.push('/dashboard');
             });
         });
     };

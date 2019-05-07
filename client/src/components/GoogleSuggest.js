@@ -19,8 +19,11 @@ export default class GoogleSuggest extends React.Component {
 
     handleSelectSuggest = (geocodedPrediction, originalPrediction) => {
        // this.props.callback(geocodedPrediction.geometry.location.lat(), geocodedPrediction.geometry.location.lng());
-
         this.setState({search: "", value: geocodedPrediction.formatted_address})
+        this.props.setLatLng({
+            lat: geocodedPrediction.geometry.location.lat(),
+            lng: geocodedPrediction.geometry.location.lng()
+        });
     }
 
     render() {

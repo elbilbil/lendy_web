@@ -3,171 +3,96 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Link} from "react-router-dom";
+import ReactLoading from "react-loading";
 
 export default class Carousel extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        if (this.props.myself.myself === "")
+            this.props.getMyself(() => {
+                if (this.props.myself.myself.type === "preteur")
+                {
+                    this.props.getDrivers(() => {
+                        this.setState({listFound: this.props.drivers.drivers});
+                        console.log(this.props.drivers);
+                    });
+                }
+                else {
+                    this.props.getLenders(() => {
+                        this.setState({listFound: this.props.lenders.lenders});
+                    });
+                }
+            });
+        else {
+            if (this.props.myself.myself.type === "preteur") {
+                this.props.getDrivers(() => {
+                    this.setState({listFound: this.props.drivers.drivers});
+                });
+            }
+            else {
+                this.props.getLenders(() => {
+                    this.setState({listFound: this.props.lenders.lenders});
+                });
+            }
+        }
+    }
+
+
+    renderCarousel(){
+        if (this.props.listFound === '')
+        {
+            return (
+                <ReactLoading type="spin" color="#fff" />
+            );
+        }
+        else
+        {
+
+            var list = this.props.listFound;
+            if (list.length > 9)
+                list.length = 9;
+            const settings = {
+                dots: true,
+                arrow:true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: list.length,
+                variableWidth: true,
+            };
+            return (
+                <Slider {...settings}>
+                    {
+                        list.map(l => (
+                            <div className="card-carousel text-left" key={l._id}>
+                                <article className="advert-props">
+                                    <div className="fdb-box p-0">
+                                        <img alt="image" className="img-fluid rounded-0" src="/assets/people/1.jpg"/>
+
+                                        <div className="content p-3">
+                                            <h3><strong>{l.firstname.charAt(0).toUpperCase() + l.firstname.slice(1)} {l.lastname.charAt(0).toUpperCase()}.</strong></h3>
+                                            <p>Voiture: {l.cars}</p>
+                                        </div>
+                                    </div>
+                                    <div style={{textAlign: 'center'}}>
+                                        <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
+                                    </div>
+                                </article>
+                            </div>
+                        ))
+                    }
+                </Slider>
+            );
+        }
+    }
+
     render() {
-        const settings = {
-            dots: true,
-            arrow:true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3
-        };
+
         return (
             <div>
-                <Slider {...settings}>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                        <div className="fdb-box p-0">
-                            <img alt="image" className="img-fluid rounded-0" src="/assets/people/1.jpg"/>
-
-                            <div className="content p-3">
-                                <h3><strong>John Doe</strong></h3>
-                                <p>Voiture: Simca1000</p>
-                            </div>
-                            <div className="prop-body">
-                                <p className="start-date">
-                                    <strong>
-                                        <i className="ion-calendar"></i>
-                                        Dernière connexion:
-                                    </strong>
-                                    12/3/2019
-                                </p>
-
-                            </div>
-                        </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/2.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>John Doe</strong></h3>
-                                    <p>Voiture: Simca1000</p>
-                                </div>
-                                <div className="prop-body">
-                                    <p className="start-date">
-                                        <strong>
-                                            <i className="ion-calendar"></i>
-                                            Dernière connexion:
-                                        </strong>
-                                        12/3/2019
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/3.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>John Doe</strong></h3>
-                                    <p>Voiture: Simca1000</p>
-                                </div>
-                                <div className="prop-body">
-                                    <p className="start-date">
-                                        <strong>
-                                            <i className="ion-calendar"></i>
-                                            Dernière connexion:
-                                        </strong>
-                                        12/3/2019
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/4.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>John Doe</strong></h3>
-                                    <p>Voiture: Simca1000</p>
-                                </div>
-                                <div className="prop-body">
-                                    <p className="start-date">
-                                        <strong>
-                                            <i className="ion-calendar"></i>
-                                            Dernière connexion:
-                                        </strong>
-                                        12/3/2019
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/5.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>John Doe</strong></h3>
-                                    <p>Voiture: Simca1000</p>
-                                </div>
-                                <div className="prop-body">
-                                    <p className="start-date">
-                                        <strong>
-                                            <i className="ion-calendar"></i>
-                                            Dernière connexion:
-                                        </strong>
-                                        12/3/2019
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                    <div className=" card-carousel text-left" >
-                        <article className="advert-props">
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/6.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>John Doe</strong></h3>
-                                    <p>Voiture: Simca1000</p>
-                                </div>
-                                <div className="prop-body">
-                                    <p className="start-date">
-                                        <strong>
-                                            <i className="ion-calendar"></i>
-                                            Dernière connexion:
-                                        </strong>
-                                        12/3/2019
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div style={{textAlign: 'center'}}>
-                                <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le profil</Link>
-                            </div>
-                        </article>
-                    </div>
-                </Slider>
+                {this.renderCarousel()}
             </div>
         );
     }

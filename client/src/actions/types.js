@@ -9,3 +9,6 @@ export const GET_CAR_MAKES = 'get_car_makes';
 export const GET_CAR_MODELS = 'get_car_models';
 export const GET_CAR_TRIMS = 'get_car_trims';
 export const GET_CAR_MODEL = 'get_car_model';
+
+//Conversations
+export const GET_CONVERSATIONS_UNREAD = 'get_conversations_unread';

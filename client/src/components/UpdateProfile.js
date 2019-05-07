@@ -232,7 +232,7 @@ class UpdateProfile extends Component {
                     <p>
                         Vos informations ont bien été enregistrées!
                     </p>
-                    <button onClick={() => {this.props.history.push('/feature');}} className="btn btn secondary">Retour à l'accueil</button>
+                    <button onClick={() => {this.props.history.push('/dashboard');}} className="btn btn secondary">Retour à l'accueil</button>
                 </Modal>
                 <div className="container">
                     <div className="row text-center">

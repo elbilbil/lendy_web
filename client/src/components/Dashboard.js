@@ -3,19 +3,19 @@ import requireAuth from './requireAuth';
 import {connect} from 'react-redux';
 import Carousel from './Carousel';
 import ConversationsDashboard from './ConversationsDashboard'
-import GoogleSuggest from './GoogleSuggest'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import GoogleSuggest from './GoogleSuggest';
 import {Link} from "react-router-dom";
 import '../CSS/GME.css'
 
 
-class DashboardPreteur extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
             lat: '',
             lng: '',
-            errorSearch: ''
+            errorSearch: '',
+            listFound: '',
         };
         this.getLatLng = this.getLatLng.bind(this);
         this.getSearch = this.getSearch.bind(this);
@@ -23,22 +23,36 @@ class DashboardPreteur extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
-        this.props.getMakes(() => {
-            console.log(this.props.carApi);
-        });
         if (this.props.myself.myself === "")
             this.props.getMyself(() => {
+                if (this.props.myself.myself.type === "preteur")
+                {
+                    this.props.getDrivers(() => {
+                        this.setState({listFound: this.props.drivers.drivers});
+                        console.log(this.props.drivers);
+                    });
+                }
+                else {
+                    this.props.getLenders(() => {
+                        this.setState({listFound: this.props.lenders.lenders});
+                    });
+                }
+            });
+        else {
+            if (this.props.myself.myself.type === "preteur") {
                 this.props.getDrivers(() => {
+                    this.setState({listFound: this.props.drivers.drivers});
                 });
-            });
-        else
-            this.props.getDrivers(() => {
-            });
+            }
+            else {
+                this.props.getLenders(() => {
+                    this.setState({listFound: this.props.lenders.lenders});
+                });
+            }
+        }
     }
 
     getLatLng(lat, lng) {
-        console.log(lat, lng);
         this.setState({
             lat: lat,
             lng: lng
@@ -52,37 +66,13 @@ class DashboardPreteur extends Component {
     }
 
     getSearch() {
-        if (this.state.lat === '' || this.state.lng == '')
+        if (this.state.lat === '' || this.state.lng === '')
             this.renderErrorSearch();
         else {
             this.setState({errorSearch: ''});
         }
     }
 
-    renderDrivers = (myDrivers) => {
-        if (myDrivers.drivers !== "") {
-            return myDrivers.drivers.map((driver) => {
-                if (driver._id !== this.props.myself.myself._id) {
-                    return (
-                        <div className="col-sm-3 text-left" key={driver._id}>
-                            <div className="fdb-box p-0">
-                                <img alt="image" className="img-fluid rounded-0" src="/assets/people/6.jpg"/>
-
-                                <div className="content p-3">
-                                    <h3><strong>{driver.firstname} {driver.lastname}</strong></h3>
-                                    <p>Voiture: {driver.cars}</p>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                }
-                else
-                    return '';
-            })
-        }
-        else
-            return (<div></div>);
-    };
 
     renderName = () => {
         if (this.props.myself.myself !== "") {
@@ -93,12 +83,30 @@ class DashboardPreteur extends Component {
             return '';
     };
 
-    render() {
+    recommended = () => {
+        if (this.props.myself.myself !== "") {
+            if (this.props.myself.myself.type === "preteur")
+            {
+                return 'Chauffeurs autour de vous';
+            }
+            else {
+                return 'Prêteurs autour de vous';
+            }
+        }
+        else
+            return '';
+    }
 
+    getList = () =>{
+        return this.state.listFound;
+    };
+
+    render() {
         return (
             <div>
                 <main className="container-fluid new-dashboard-ctn dashboard-nounou-ctn">
                     <section className="container">
+                        <h1 style={{textAlign: 'center'}}>Bonjour {this.renderName()}</h1>
                         <div className="row">
                             <div className="col-xs-12 col-sm-12">
                                 <h2 style={{textAlign: 'center'}}>Messages reçus</h2>
@@ -115,13 +123,13 @@ class DashboardPreteur extends Component {
                     <section className="container">
                         <div className="row">
                             <div className="col-xs-12 col-sm-12">
-                                <h2 style={{textAlign: 'center'}}>Chauffeurs recommandés</h2>
+                                <h2 style={{textAlign: 'center'}}>{this.recommended()}</h2>
                             </div>
                         </div>
                         <div className="row" style={{display: 'block'}}>
                             <div className="carousel-adverts">
                                 <div className="col-md-12 text-center">
-                                    <Carousel/>
+                                    <Carousel listFound={this.getList()}/>
                                 </div>
                             </div>
                         </div>
@@ -198,10 +206,11 @@ class DashboardPreteur extends Component {
 function mapStateToProps(state) {
     return {
         drivers: state.drivers,
+        lenders: state.lenders,
         myself: state.myself,
         carApi: state.carApi
     }
 }
 
 
-export default connect(mapStateToProps)(requireAuth(DashboardPreteur));
+export default connect(mapStateToProps)(requireAuth(Dashboard));
