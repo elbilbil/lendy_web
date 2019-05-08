@@ -3,6 +3,7 @@ export const AUTH_ERROR = 'auth_error';
 export const GET_DRIVERS = 'get_drivers';
 export const GET_LENDERS = 'get_lenders';
 export const GET_MYSELF = 'get_myself';
+export const GET_USER = 'get_user';
 
 //Cars API
 export const GET_CAR_MAKES = 'get_car_makes';
@@ -12,3 +13,6 @@ export const GET_CAR_MODEL = 'get_car_model';
 
 //Conversations
 export const GET_CONVERSATIONS_UNREAD = 'get_conversations_unread';
+export const GET_CONVERSATIONS = 'get_conversations';
+export const GET_CONVERSATION = 'get_conversation';
+export const POST_MESSAGE = 'post_message';

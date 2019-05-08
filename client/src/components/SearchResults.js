@@ -22,7 +22,7 @@ class SearchResults extends Component {
         if (this.props.listFound === '')
         {
             return (
-                <ReactLoading type="spin" color="#fff" />
+                <ReactLoading className='myCenter' type="spin" color="#f26d7d" />
             );
         }
         else

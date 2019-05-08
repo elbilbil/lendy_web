@@ -1,33 +1,56 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
 import requireAuth from "./requireAuth";
+import ReactLoading from "react-loading";
 
 
 class ConversationsDashboard extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            conversation: null,
+            user: null,
+            myself: null,
+        };
     }
 
     componentDidMount() {
-        if (this.props.conversations.unread === "")
+        this.props.getMyself(() => {
+            this.setState({myself: this.props.myself})
             this.props.unreadMessages(() => {
-                console.log(this.props.conversations);
+                this.setState({conversation: this.props.conversations.unread});
+                if (!this.state.conversation[0]) {
+                    this.setState({conversation: -1});
+                    return;
+                }
+                var id = this.state.conversation[0].members[0] === this.state.myself._id ? this.state.conversation[0].members[1] : this.state.conversation[0].members[0];
+                this.props.getUser(() => {
+                    this.setState({user: this.props.user});
+                }, {userId: id});
             });
-        else
-            this.props.unreadMessages(() => {
-                console.log(this.props.conversations);
-            });
+        });
     }
 
-    render() {
-        return (
-            <section className="container">
+    renderBlock() {
+        if (this.state.conversation === -1)
+            return (
+                <div>
+                    <p>Aucune nouvelle conversation</p>
+                </div>
+            );
+        if (this.state.user === null || this.state.conversation === null || this.props.myself === null) {
+            return (
+                <ReactLoading className='myCenter' type="spin" color="#f26d7d"/>
+            );
+        }
+        else {
+            return (
                 <div className="row row-eq-height request-row conversation-{{ conversation.id }}">
                     <div className="col-md-3 request-header-col onhold">
                         <div className="request-header">
-                                <img alt="image" className="photo-message" src="/assets/people/1.jpg"/>
-                            <h4>Jean Daniel</h4>
+                            <img alt="image" className="photo-message" src="/assets/people/1.jpg"/>
+                            <h4>{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.</h4>
                             <p>
                                 <strong>
                                     <i className="ion-location"></i>
@@ -40,23 +63,26 @@ class ConversationsDashboard extends Component {
                     <div className="col-md-6 text-center">
                         <div className="parent-msg" id="userid2">
                             <h4 className="dashboard-card-title">Message
-                                de Jean Daniel</h4>
+                                de {this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.</h4>
                             <p className="short-msg short-msg-{{ loop.index }}">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                {this.state.conversation[0].messages[this.state.conversation[0].messages.length - 1].message}
                             </p>
-                            <Link className="txt-link show-msg show-msg-{{ loop.index }}" to={'/message'}>Voir le message</Link>
-                            <a className="txt-link hide-msg hide-msg-{{ loop.index }}">Masquer le message</a>
                             <p>&nbsp;</p>
                         </div>
                     </div>
 
                     <div className="col-md-3 btns-col">
-                            <Link className="btn btn-secondary ml-md-3" to='#' style={{marginBottom: '10%'}}>Ne plus afficher</Link>
-                            <Link className="btn btn-primary ml-md-3" to='#'>Répondre au message</Link>
+                        <Link className="btn btn-primary ml-md-3" to={`/message/${this.props.user._id}`}>Répondre au message</Link>
                     </div>
                 </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <section className="container">
+                    {this.renderBlock()}
             </section>
         );
     }
@@ -64,7 +90,9 @@ class ConversationsDashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        conversations: state.conversations
+        conversations: state.conversations,
+        user: state.user.user,
+        myself: state.myself.myself
     }
 }
 

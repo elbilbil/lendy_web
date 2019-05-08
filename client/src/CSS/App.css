@@ -2591,12 +2591,14 @@ select::-ms-expand {
   height:200px;
 }
 
-.slick-active {
-  width:33%;
-}
 
 .slick-slide img {
   height:300px;
+}
+
+.myCenter{
+  top: 50%;
+  margin-left:48%;
 }
 
 @media (height:300px){.legal-login,.photo-cred-login{display:none}}

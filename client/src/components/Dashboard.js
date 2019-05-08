@@ -3,7 +3,6 @@ import requireAuth from './requireAuth';
 import {connect} from 'react-redux';
 import Carousel from './Carousel';
 import ConversationsDashboard from './ConversationsDashboard'
-import GoogleSuggest from './GoogleSuggest';
 import {Link} from "react-router-dom";
 import '../CSS/GME.css'
 
@@ -29,7 +28,6 @@ class Dashboard extends Component {
                 {
                     this.props.getDrivers(() => {
                         this.setState({listFound: this.props.drivers.drivers});
-                        console.log(this.props.drivers);
                     });
                 }
                 else {
@@ -106,7 +104,9 @@ class Dashboard extends Component {
             return '';
         else
         {
-            if (this.props.myself.myself.adTitle !== '' && this.props.myself.myself.adDescription !== '')
+
+            if (this.props.myself.myself.adTitle && this.props.myself.myself.adDescription
+                && this.props.myself.myself.adTitle !== '' && this.props.myself.myself.adDescription !== '')
             {
                 return (
                     <div className="row">

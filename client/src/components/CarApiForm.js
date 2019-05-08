@@ -187,7 +187,6 @@ class CarApiForm extends Component {
                     <div className="row">
                         {this.renderCar(0)}
                     </div>
-                </div>
             </section>
         );
     }
@@ -205,5 +204,3 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps)(requireAuth(CarApiForm));
 
-
-//export default connect(mapStateToProps)(requireAuth(UpdateProfile));

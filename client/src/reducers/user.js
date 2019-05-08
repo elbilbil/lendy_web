@@ -1,7 +1,9 @@
 import {GET_MYSELF} from "../actions/types";
+import {GET_USER} from "../actions/types";
 
 const INITIAL_STATE = {
-    myself: ''
+    myself: '',
+    user: ''
 };
 
 export default function(state = INITIAL_STATE, action){
@@ -9,6 +11,8 @@ export default function(state = INITIAL_STATE, action){
     {
         case GET_MYSELF:
             return {...state, myself: action.payload};
+        case GET_USER:
+            return {...state, user: action.payload};
         default:
             return state
     }

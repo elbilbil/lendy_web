@@ -1,17 +1,64 @@
 import React, {Component} from "react";
 import '../CSS/GME.css';
 import '../CSS/responsive.css';
-import { IoIosCheckmark } from "react-icons/io";
+import {IoIosCheckmark} from "react-icons/io";
 import {IoMdCar} from "react-icons/io";
-import { IconContext } from "react-icons";
+import {IconContext} from "react-icons";
 import {Link} from "react-router-dom";
+import connect from "react-redux/es/connect/connect";
+import requireAuth from "./requireAuth";
+import ReactLoading from "react-loading";
 
-export default class Profile extends Component {
-    render() {
+class Profile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: null,
+            user: ''
+        };
+    }
 
-        return (
-            <div id="sb-site">
+    componentDidMount() {
+        const userId = this.props.match.params.id;
+        this.setState({id: userId});
+        this.props.getUser(() => {
+            this.setState({user: this.props.user});
+        }, {userId: userId});
+    }
 
+    renderAdvert() {
+        if (!this.state.user.adTitle || !this.state.user.adDescription || this.state.user.adTitle === '' || this.state.user.adDescription === '')
+        {
+            return (
+                <div>
+                    <h2>L'annonce de cet utilisateur est vide</h2>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                    <h2 className="probabytext01">
+                        <i className="ion-person"></i>
+                        {this.state.user.adTitle}
+                    </h2>
+                    <p className="probabytext02">
+                        {this.state.user.adDescription}
+                    </p>
+                </div>
+            )
+        }
+    }
+
+    renderProfile() {
+        if (this.state.user === '') {
+            return (
+                <ReactLoading className='myCenter' type="spin" color="#f26d7d"/>
+            )
+        }
+        else {
+            console.log(this.state);
+            return (
                 <div className="wrapper" id="wrapper">
                     <section className="view-profile">
                         <div className="wrapper">
@@ -30,7 +77,7 @@ export default class Profile extends Component {
 
                                             </figure>
 
-                                            <h2 className="hidden-md">Prenom N.
+                                            <h2 className="hidden-md">{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.
                                                 <br/>
                                                 <small>
                                                     Age
@@ -47,9 +94,9 @@ export default class Profile extends Component {
 
                                         <div className="row">
                                             <div className="col-sm-8">
-                                                <h1 className="hidden-xs hidden-sm">Jean D.
+                                                <h1 className="hidden-xs hidden-sm">{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.
                                                     <small>
-                                                         23 ans
+                                                        23 ans
                                                     </small>
                                                 </h1>
                                                 <p>
@@ -73,7 +120,8 @@ export default class Profile extends Component {
                                                 </div>
                                                 <div className="contact-btns-col">
 
-                                                    <Link className="btn btn-primary" to='#' style={{width: '100%', fontSize: 'x-large'}}>CONTACTER</Link>
+                                                    <Link className="btn btn-primary" to={`/message/${this.state.user._id}`}
+                                                          style={{width: '100%', fontSize: 'x-large'}}>CONTACTER</Link>
 
                                                 </div>
 
@@ -100,7 +148,7 @@ export default class Profile extends Component {
                                 <aside className="col-md-3">
                                     <article className="trust-col-view col-md-12 col-sm-12">
                                         <h3 className="probabytext01">
-                                            <IconContext.Provider value={{ size: "2em" }}>
+                                            <IconContext.Provider value={{size: "2em"}}>
                                                 <IoIosCheckmark className/>
                                             </IconContext.Provider>
                                             Vérifications
@@ -108,19 +156,19 @@ export default class Profile extends Component {
                                         <ul className="trust-profile">
                                             <li className="done">
                                                 Identité vérifiée
-                                                <IconContext.Provider value={{ size: "2em", className: "pull-right" }}>
+                                                <IconContext.Provider value={{size: "2em", className: "pull-right"}}>
                                                     <IoIosCheckmark className/>
                                                 </IconContext.Provider>
                                             </li>
                                             <li className="done">
                                                 Email vérifié
-                                                <IconContext.Provider value={{ size: "2em", className: "pull-right" }}>
+                                                <IconContext.Provider value={{size: "2em", className: "pull-right"}}>
                                                     <IoIosCheckmark className/>
                                                 </IconContext.Provider>
                                             </li>
                                             <li className="done">
                                                 N° de téléphone vérifié
-                                                <IconContext.Provider value={{ size: "2em", className: "pull-right" }}>
+                                                <IconContext.Provider value={{size: "2em", className: "pull-right"}}>
                                                     <IoIosCheckmark className/>
                                                 </IconContext.Provider>
                                             </li>
@@ -128,8 +176,8 @@ export default class Profile extends Component {
 
                                             <li className="done">
                                                 Profil évalué
-                                                <IconContext.Provider value={{ size: "2em", className: "pull-right" }}>
-                                                    <IoIosCheckmark />
+                                                <IconContext.Provider value={{size: "2em", className: "pull-right"}}>
+                                                    <IoIosCheckmark/>
                                                 </IconContext.Provider>
                                             </li>
 
@@ -137,88 +185,65 @@ export default class Profile extends Component {
 
                                     </article>
 
-                                    <article className="col-md-12 col-sm-4 hidden-xs" id="view-cities">
-                                        <h3 className="probabytext01">
-                                            <IconContext.Provider value={{ size: "2em" }}>
-                                                <IoMdCar />
-                                            </IconContext.Provider>
-                                            Je me déplace à
-                                        </h3>
+                                    {/*<article className="col-md-12 col-sm-4 hidden-xs" id="view-cities">
+                                            <h3 className="probabytext01">
+                                                <IconContext.Provider value={{ size: "2em" }}>
+                                                    <IoMdCar />
+                                                </IconContext.Provider>
+                                                Je me déplace à
+                                            </h3>
 
-                                        <ul className="availabilities">
+                                            <ul className="availabilities">
 
-                                            <li>
-                                                <a href="{{ path('gme_platform_view_tout_ville', {'ville': city.name }) }}">
-                                                    <i className="ion-arrow-right-b" aria-hidden="true"></i>
-                                                    Marseille
-                                                </a>
-                                            </li>
-                                        </ul>
-
-
-                                    </article>
-
-                                    <article className="col-md-12 hidden-sm hidden-xs">
-                                        <h3 className="probabytext01">
-                                            <i className="ion-ios-people"></i>
-                                            Annonces similaires
-                                        </h3>
-                                        <div className="row similar-advert">
-                                            <div className="col-md-3 col-sm-2 col-xs-2 text-center">
-
-                                                <figure className="square-img-ctn">
-                                                    <a
-                                                        href=""
-                                                        className="image-bg image-bg-w50">
-                                                        <img className="image-bg-placeholder"
-                                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                             alt=""/>
-                                                        <img alt="image" className="" src="/assets/people/2.jpg"
-                                                             style={{width: '70%'}}/>
-                                                    </a>
-                                                </figure>
-                                            </div>
-                                            <div className="col-md-9 col-sm-7 col-xs-7">
-                                                <a href="">
-                                                    <h3>
-                                                        Jean Random
-                                                    </h3>
-                                                    <p>
-                                                        à
+                                                <li>
+                                                    <a href="{{ path('gme_platform_view_tout_ville', {'ville': city.name }) }}">
+                                                        <i className="ion-arrow-right-b" aria-hidden="true"></i>
                                                         Marseille
-                                                    </p>
-                                                </a>
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+
+                                        </article>*/}
+
+                                    {/*<article className="col-md-12 hidden-sm hidden-xs">
+                                            <h3 className="probabytext01">
+                                                <i className="ion-ios-people"></i>
+                                                Annonces similaires
+                                            </h3>
+                                            <div className="row similar-advert">
+                                                <div className="col-md-3 col-sm-2 col-xs-2 text-center">
+
+                                                    <figure className="square-img-ctn">
+                                                        <a
+                                                            href=""
+                                                            className="image-bg image-bg-w50">
+                                                            <img className="image-bg-placeholder"
+                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                                                 alt=""/>
+                                                            <img alt="image" className="" src="/assets/people/2.jpg"
+                                                                 style={{width: '70%'}}/>
+                                                        </a>
+                                                    </figure>
+                                                </div>
+                                                <div className="col-md-9 col-sm-7 col-xs-7">
+                                                    <a href="">
+                                                        <h3>
+                                                            Jean Random
+                                                        </h3>
+                                                        <p>
+                                                            à
+                                                            Marseille
+                                                        </p>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </article>
+                                        </article>*/}
                                 </aside>
 
                                 <div className="col-md-9 ">
                                     <article className="probaby_left01 col-sm-12">
-                                        <h2 className="probabytext01">
-                                            <i className="ion-person"></i>
-                                            Titre de l'annonce
-                                        </h2>
-                                        <p className="probabytext02">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                            doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                                            veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                                            ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
-                                            porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                            adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-                                            dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-                                            nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid
-                                            ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                                            voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem
-                                            eum fugiat quo voluptas nulla pariatur?
-                                        </p>
+                                        {this.renderAdvert()}
                                     </article>
 
                                 </div>
@@ -226,7 +251,24 @@ export default class Profile extends Component {
                         </div>
                     </section>
                 </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <div id="sb-site">
+                {this.renderProfile()}
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.user.user
+    }
+}
+
+
+export default connect(mapStateToProps)(requireAuth(Profile));
