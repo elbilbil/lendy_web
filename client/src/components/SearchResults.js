@@ -6,27 +6,19 @@ import '../CSS/GME.css'
 import 'react-rangeslider/lib/index.css'
 import "react-datepicker/dist/react-datepicker.css";
 import ReactLoading from "react-loading";
+import ImageUser from "./ImageUser";
 
 
 class SearchResults extends Component {
-    constructor(props) {
-        super(props);
 
-    }
-
-    componentDidMount() {
-
-    }
 
     renderResults() {
-        if (this.props.listFound === '')
-        {
+        if (this.props.listFound === '') {
             return (
-                <ReactLoading className='myCenter' type="spin" color="#f26d7d" />
+                <ReactLoading className='myCenter' type="spin" color="#f26d7d"/>
             );
         }
-        else
-        {
+        else {
 
             var list = this.props.listFound;
             if (list.length === 0)
@@ -37,27 +29,33 @@ class SearchResults extends Component {
                 );
 
             return (
-                    list.map(l => (
-                        <div className="col-md-6 card-carousel text-left" key={l._id}>
-                            <article className="advert-props">
-                                <div className="fdb-box p-0">
-                                    <img alt="image" className="img-fluid rounded-0" src="/assets/people/1.jpg"/>
+                list.map(function (l, index) {
+                        if (l.firstname) {
+                            return (
+                                <div className="col-md-6 card-carousel text-left" key={l._id}>
+                                    <article className="advert-props">
+                                        <div className="fdb-box p-0">
+                                            <ImageUser user={l}/>
 
-                                    <div className="content p-3">
-                                        <h3>
-                                            <strong>{l.firstname.charAt(0).toUpperCase() + l.firstname.slice(1)} {l.lastname.charAt(0).toUpperCase()}.</strong>
-                                        </h3>
-                                        <p>Voiture: {l.cars}</p>
-                                    </div>
+                                            <div className="content p-3">
+                                                <h3>
+                                                    <strong>{l.firstname.charAt(0).toUpperCase() + l.firstname.slice(1)} {l.lastname.charAt(0).toUpperCase()}.</strong>
+                                                </h3>
+                                                <p>Voiture: {l.cars}</p>
+                                            </div>
+                                        </div>
+                                        <div style={{textAlign: 'center'}}>
+                                            <Link className="btn btn-primary" to={`/profile/${l._id}`} style={{width: '80%'}}>Voir le
+                                                profil</Link>
+                                        </div>
+                                    </article>
                                 </div>
-                                <div style={{textAlign: 'center'}}>
-                                    <Link className="btn btn-primary" to='/profile' style={{width: '80%'}}>Voir le
-                                        profil</Link>
-                                </div>
-                            </article>
-                        </div>
-                    ))
-            );
+                            )
+                        }
+                        return '';
+                    }
+                )
+            )
         }
     }
 

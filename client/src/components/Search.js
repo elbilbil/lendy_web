@@ -50,7 +50,6 @@ class Search extends Component {
     }
 
     search(params) {
-        console.log(params);
         if (this.state.type !== '') {
             if (this.state.type === 'preteur') {
                 this.props.getDrivers(() => {

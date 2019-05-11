@@ -5,6 +5,8 @@ import '../CSS/GME.css'
 import 'react-rangeslider/lib/index.css'
 import "react-datepicker/dist/react-datepicker.css";
 import {Link} from "react-router-dom";
+import ReactLoading from "react-loading";
+import ImageUser from "./ImageUser";
 
 
 class Conversations extends Component {
@@ -12,58 +14,31 @@ class Conversations extends Component {
         super(props);
         this.state = {
             myself: null,
-            otherUsers: null,
+            otherUsers: [],
             conversations: null,
         };
-        this.renderMessageAndName = this.renderMessageAndName.bind(this);
     }
 
     componentDidMount() {
         this.props.getMyself(() => {
             this.setState({myself: this.props.myself});
-        });
-        this.props.getConversations(() => {
-            console.log(this.props.conversations);
-            this.setState({conversations: this.props.conversations});
-            console.log(this.state.conversations);
+            this.props.getConversations(() => {
+                this.setState({conversations: this.props.conversations});
+                this.props.conversations.map(conv => {
+                    var id = conv.members[0] === this.state.myself._id ? conv.members[1] : conv.members[0];
+                    this.props.getUsers((resp) => {
+                        this.setState({otherUsers: this.state.otherUsers.concat(resp)});
+                    }, {userId: id});
+                })
+            });
         });
     }
 
-    renderMessageAndName(conv) {
-        if (this.state.myself !== null) {
-            var id = conv.members[0] === this.state.myself._id ? conv.members[1] : conv.members[0];
-            this.props.getUser(() => {
-            }, {userId: id});
-            if (this.props.otherUser)
-            {
-                return (
-                    <div>
-                        <h3>
-                            <Link to={`/message/${this.props.otherUser._id}`}>
-                                {this.props.otherUser.firstname.charAt(0).toUpperCase() + this.props.otherUser.firstname.slice(1)} {this.props.otherUser.lastname.charAt(0).toUpperCase()}.
-                            </Link>
-                        </h3>
-                        <p>
-                            <Link to={`/message/${this.props.otherUser._id}`}>
-                                {conv.messages[conv.messages.length - 1].message}
-                            </Link>
-                        </p>
-                    </div>
-                )
-            }
-            else
-                return '';
-        }
-        else
-        {
-            return '';
-        }
-    }
 
     renderConvos() {
-        if (this.state.conversations !== null) {
+        if (this.state.conversations !== null && this.state.otherUsers.length === this.state.conversations.length) {
             return (
-                this.state.conversations.map(conv => {
+                this.state.conversations.map((conv, index) => {
                         return (
                             <div className="latest_message_sec" key={conv._id}>
                                 <div className="latest_message_sec row">
@@ -72,19 +47,25 @@ class Conversations extends Component {
                                             <a
                                                 href="{{ path('gme_platform_viewconversation', {'toid': toaff.id}) }}"
                                                 className="image-bg image-bg-w85">
-                                                <img className="image-bg-placeholder"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                     alt=""/>
-                                                <img className="image-bg-img sr-only"
-                                                     src="https://ui-avatars.com/api/?name={{ toaff.prenom }}+{{ toaff.nom }}&background=FFAE69&color=fff&size=150&font-size=0.33"
-                                                     alt=""/>
+                                                <ImageUser user={this.state.otherUsers[index]}/>
                                             </a>
                                         </figure>
 
                                     </div>
                                     <div className="col-sm-7 col-xs-7">
                                         <div className="msg-preview">
-                                            {this.renderMessageAndName(conv)}
+                                            <div>
+                                                <h3>
+                                                    <Link to={`/message/${this.state.otherUsers[index]._id}`}>
+                                                        {this.state.otherUsers[index].firstname.charAt(0).toUpperCase() + this.state.otherUsers[index].firstname.slice(1)} {this.state.otherUsers[index].lastname.charAt(0).toUpperCase()}.
+                                                    </Link>
+                                                </h3>
+                                                <p>
+                                                    <Link to={`/message/${this.state.otherUsers[index]._id}`}>
+                                                        {conv.messages[conv.messages.length - 1].message}
+                                                    </Link>
+                                                </p>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -128,7 +109,9 @@ class Conversations extends Component {
                 ));
         }
         else {
-            return '';
+            return (
+                <ReactLoading className='myCenter' type="spin" color="#f26d7d"/>
+            );
         }
     }
 
@@ -142,11 +125,7 @@ class Conversations extends Component {
                             <h2>
                                 MESSAGERIE
                             </h2>
-                            {/*for*/}
                             {this.renderConvos()}
-
-
-                            {/*endfor*/}
                         </section>
 
                     </div>

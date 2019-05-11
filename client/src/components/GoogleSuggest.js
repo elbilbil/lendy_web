@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React from "react"
 import GoogleMapLoader from "react-google-maps-loader"
 import GooglePlacesSuggest from "react-google-places-suggest"
 
@@ -20,14 +20,16 @@ export default class GoogleSuggest extends React.Component {
     handleSelectSuggest = (geocodedPrediction, originalPrediction) => {
        // this.props.callback(geocodedPrediction.geometry.location.lat(), geocodedPrediction.geometry.location.lng());
         this.setState({search: "", value: geocodedPrediction.formatted_address})
-        this.props.setLatLng({
-            lat: geocodedPrediction.geometry.location.lat(),
-            lng: geocodedPrediction.geometry.location.lng()
-        });
+        if (this.props.setLatLng) {
+            this.props.setLatLng({
+                lat: geocodedPrediction.geometry.location.lat(),
+                lng: geocodedPrediction.geometry.location.lng()
+            });
+        }
     }
 
     render() {
-        const {search, value} = this.state
+        const {search, value} = this.state;
         return (
             <GoogleMapLoader
                 params={{

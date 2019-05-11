@@ -3,6 +3,8 @@ import {reduxForm, Field} from 'redux-form';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import * as actions from '../../actions';
+import ImageUser from "../ImageUser";
+import ImgUpload from "../ImgUpload";
 
 class Signup extends Component {
     constructor(props){
@@ -10,6 +12,7 @@ class Signup extends Component {
         this.state = {
             type: null
         };
+        this.setPhoto = this.setPhoto.bind(this);
     }
     componentDidMount() {
         const myType = this.props.match.params.type;
@@ -19,7 +22,9 @@ class Signup extends Component {
     }
 
     onSubmit = (formProps) => {
-        var isDriver;
+        if (this.state.photo !== null) {
+            formProps = {...formProps, picture: this.state.photo}
+        }
         formProps = {
             ...formProps,
             address: ' ',
@@ -41,6 +46,10 @@ class Signup extends Component {
                     {touched && error && <span className='text-danger'>{error}</span>}
                 </div>
         );
+    }
+
+    setPhoto(photoRes) {
+        this.setState({photo: photoRes});
     }
 
     render(){
@@ -106,6 +115,10 @@ class Signup extends Component {
                                             </fieldset>
                                         </div>
                                         <div>
+                                            <h3>Ajoutez une photo de profil</h3>
+                                            <ImgUpload setPhoto={this.setPhoto}/>
+                                        </div>
+                                        <div>
                                             {this.props.errorMessage}
                                         </div>
                                         <div className="row mt-4">
@@ -148,7 +161,7 @@ function validate(values){
         errors.lastname = 'Ajoutez un nom de plus de 3 caractères';
     }
 
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!values.username)
     {
         errors.username = 'Ajoutez une adresse mail ';

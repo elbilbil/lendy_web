@@ -8,6 +8,8 @@ import {Link} from "react-router-dom";
 import {compose} from "redux";
 import * as actions from "../actions";
 import {Field, reduxForm} from "redux-form";
+import ImgUpload from "./ImgUpload";
+import ImageUser from "./ImageUser";
 
 
 class Messagerie extends Component {
@@ -30,8 +32,6 @@ class Messagerie extends Component {
         this.props.getUser(() => {
             this.setState({user: this.props.user});
             this.props.getConversation(() => {
-                console.log(this.props.messages);
-                console.log(this.props.user);
                 this.setState({messages: this.props.messages.reverse()})
             }, {contacts: this.state.user._id});
         }, {userId: userId});
@@ -44,10 +44,7 @@ class Messagerie extends Component {
                     <div className="massege_details_sub_col01">
                         <div className="massege_details_col01_img">
 
-                            <img
-                                className="image-bg-img"
-                                src="/assets/people/2.jpg"
-                                alt="{{ otherUser.photoProfile }}"/>
+                            <ImageUser user={this.state.user}/>
 
                         </div>
 
@@ -90,9 +87,7 @@ class Messagerie extends Component {
                         <div className="message_rightside_box01_left_img2">
 
                             <div className="message_rightside_box01_rightimg">
-                                <img
-                                    src="/assets/people/1.jpg"
-                                    alt=""/>
+                                <ImageUser user={this.state.myself}/>
                             </div>
                         </div>
                     </div>
@@ -125,9 +120,7 @@ class Messagerie extends Component {
                         <div
                             className="message_rightside_box01_left_img2">
 
-                            <img
-                                src="/assets/people/2.jpg"
-                                alt="{{ user.photoProfile }}"/>
+                            <ImageUser user={this.state.user}/>
                         </div>
                     </div>
                 </div>
@@ -217,10 +210,7 @@ class Messagerie extends Component {
 
                                         </div>
                                         <div className="message_rightside_box01_left_img2">
-                                            <img
-                                                src="/assets/people/1.jpg"
-                                                alt=""
-                                                className="img-circle"/>
+                                            <ImageUser user={this.state.myself}/>
                                         </div>
 
                                         <div className="clear"></div>

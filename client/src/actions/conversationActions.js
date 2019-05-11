@@ -1,8 +1,8 @@
-import {GET_CONVERSATIONS_UNREAD, GET_CONVERSATION, GET_CONVERSATIONS, POST_MESSAGE} from "./types";
+import {GET_CONVERSATIONS_UNREAD, GET_CONVERSATION, GET_CONVERSATIONS} from "./types";
 
 import axios from 'axios';
-//const BASE_URL = 'http://api.lendy.fr:27031/api';
-const BASE_URL = 'http://localhost:27031/api';
+const BASE_URL = 'http://api.lendy.fr:27031/api';
+//const BASE_URL = 'http://localhost:27031/api';
 
 
 export const unreadMessages = (callback) => async dispatch => {
@@ -66,12 +66,11 @@ export const postMessage = (callback, data) => async dispatch => {
         'Authorization': `Bearer ${tokenStr}`
     };
     try {
-        const response = await axios.post(
+        await axios.post(
             webApiUrl,
             data,
             {headers: headers}
         );
-        console.log(response);
         callback();
     }
     catch (e)

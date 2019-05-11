@@ -1,9 +1,8 @@
 import {AUTH_USER, AUTH_ERROR, GET_DRIVERS, GET_MYSELF, GET_LENDERS, GET_USER} from "./types";
 
 import axios from 'axios';
-const TOKEN = '?access_token=9C9dCYXB222oI2gCmuWq87kMJ5IF3xx9Lw9O9rv2suIuMOI6imVJ30393zL30L4V';
-//const BASE_URL = 'http://api.lendy.fr:27031/api';
-const BASE_URL = 'http://localhost:27031/api';
+const BASE_URL = 'http://api.lendy.fr:27031/api';
+//const BASE_URL = 'http://localhost:27031/api';
 export * from './carApiActions';
 export * from './conversationActions';
 
@@ -83,7 +82,6 @@ export const getLenders = (callback, params) => async dispatch => {
 export const getMyself = (callback) => async dispatch => {
     let webApiUrl = BASE_URL+'/users/myself';
     let tokenStr = localStorage.getItem('token');
-    console.log(tokenStr);
     try {
         const response = await axios.get(
             webApiUrl,
@@ -113,6 +111,27 @@ export const getUser = (callback, param) => async dispatch => {
 
         dispatch({ type: GET_USER, payload: response.data });
         callback();
+    }
+    catch (e)
+    {
+        console.log(e);
+    }
+};
+
+export const getUsers = (callback, param) => async dispatch => {
+    let webApiUrl = BASE_URL+'/users/info';
+    let tokenStr = localStorage.getItem('token');
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenStr}`
+    }
+    try {
+        const response = await axios.get(
+            webApiUrl,
+            {headers: headers, params: param}
+        );
+        //return response.data;
+        callback(response.data);
     }
     catch (e)
     {

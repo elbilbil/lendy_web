@@ -1,36 +1,44 @@
 import React, {Component} from 'react';
 import requireAuth from './requireAuth';
 import Modal from 'react-responsive-modal';
-import {reduxForm, Field, initialize } from 'redux-form';
+import {reduxForm, Field} from 'redux-form';
 import {connect} from 'react-redux';
 import {compose} from "redux";
 import * as actions from "../actions";
+import ImgUpload from "./ImgUpload";
+import ImageUser from "./ImageUser";
 
 
 class UpdateProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            photo: null,
+            myself: null,
+            modifyPhoto: 0,
         };
+        this.setPhoto = this.setPhoto.bind(this);
+        this.modifyPhoto = this.modifyPhoto.bind(this);
     }
 
     onOpenModal = () => {
-        this.setState({ open: true });
+        this.setState({open: true});
     };
 
     onCloseModal = () => {
-        this.setState({ open: false });
+        this.setState({open: false});
     };
 
     componentDidMount() {
         if (this.props.myself.myself === "") {
             this.props.getMyself(() => {
+                this.setState({myself: this.props.myself.myself});
                 this.handleInitialize();
             });
         }
-        else
-        {
+        else {
+            this.setState({myself: this.props.myself.myself});
             this.handleInitialize();
         }
     }
@@ -47,7 +55,7 @@ class UpdateProfile extends Component {
     }
 
 
-    renderField({ input, label, type, placeholder, autoComplete, meta: { touched, error } }) {
+    renderField({input, label, type, placeholder, autoComplete, meta: {touched, error}}) {
 
         return (
             <div>
@@ -57,21 +65,60 @@ class UpdateProfile extends Component {
         );
     }
 
-    renderTextArea({ input, label, type, placeholder, autoComplete, meta: { touched, error } }) {
+    renderTextArea({input, label, type, placeholder, autoComplete, meta: {touched, error}}) {
 
         return (
             <div>
-                <textarea {...input} cols={40} rows={10} placeholder={placeholder} type={type} autoComplete='off' className="form-control"/>
+                <textarea {...input} cols={40} rows={10} placeholder={placeholder} type={type} autoComplete='off'
+                          className="form-control"/>
                 {touched && error && <span className='text-danger'>{error}</span>}
             </div>
         );
     }
 
     onSubmit = (formProps) => {
+        if (this.state.photo !== null) {
+            formProps = {...formProps, picture: this.state.photo}
+        }
+
         this.props.updateUser(formProps, () => {
             this.onOpenModal();
         });
     };
+
+    setPhoto(photoRes) {
+        this.setState({photo: photoRes});
+    }
+
+    modifyPhoto() {
+        this.setState({modifyPhoto: 1});
+    }
+
+    photoSection() {
+        if (this.state.myself !== null) {
+            if (this.state.myself.picture && this.state.modifyPhoto === 0) {
+                return (
+                    <div>
+                        <h3>Votre photo de profil</h3>
+                        <ImageUser user={this.state.myself}/>
+                        <br/>
+                        <button className="btn btn-secondary" type="button" onClick={this.modifyPhoto}>Modifiez votre photo
+                        </button>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div>
+                        <h3>Ajoutez une photo de profil</h3>
+                        <ImgUpload setPhoto={this.setPhoto}/>
+                        <p>Sauvegardez votre profil en bas de la page à fin de mettre à jour votre photo</p>
+                    </div>
+                )
+            }
+        }
+    }
+
 
     render() {
         const {handleSubmit} = this.props;
@@ -82,7 +129,10 @@ class UpdateProfile extends Component {
                     <p>
                         Vos informations ont bien été enregistrées!
                     </p>
-                    <button onClick={() => {this.props.history.push('/dashboard');}} className="btn btn secondary">Retour à l'accueil</button>
+                    <button onClick={() => {
+                        this.props.history.push('/dashboard');
+                    }} className="btn btn secondary">Retour à l'accueil
+                    </button>
                 </Modal>
                 <div className="container">
                     <div className="row text-center">
@@ -90,6 +140,7 @@ class UpdateProfile extends Component {
                             <h1>Mettez à jour votre profil ici</h1>
                         </div>
                     </div>
+                    {this.photoSection()}
                     <h3>Vos informations personnelles</h3>
                     <div className="row">
                         <div className="col-12 col-md-8 col-lg-8 col-xl-8 text-left">
@@ -151,7 +202,8 @@ class UpdateProfile extends Component {
                                 </div>
                                 <div className="row mt-4">
                                     <div className="col">
-                                        <button className="btn btn-secondary" type="submit">Sauvegardez votre profil</button>
+                                        <button className="btn btn-secondary" type="submit">Sauvegardez votre profil
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -164,28 +216,23 @@ class UpdateProfile extends Component {
     }
 }
 
-function validate(values){
+function validate(values) {
     const errors = {};
 
 
-    if (!values.firstname)
-    {
+    if (!values.firstname) {
         errors.firstname = 'Ajoutez un prénom';
     }
-    if (values.firstname && values.firstname.length < 3)
-    {
+    if (values.firstname && values.firstname.length < 3) {
         errors.firstname = 'Ajoutez un prénom de plus de 3 caractères';
     }
 
-    if (!values.lastname)
-    {
+    if (!values.lastname) {
         errors.lastname = 'Ajoutez un nom';
     }
-    if ( values.lastname &&  values.lastname.length < 3)
-    {
+    if (values.lastname && values.lastname.length < 3) {
         errors.lastname = 'Ajoutez un nom de plus de 3 caractères';
     }
-
 
 
     return errors;

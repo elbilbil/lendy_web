@@ -5,7 +5,6 @@ import GoogleSuggest from './GoogleSuggest'
 import Slider from 'react-rangeslider'
 import '../CSS/GME.css'
 import 'react-rangeslider/lib/index.css'
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 

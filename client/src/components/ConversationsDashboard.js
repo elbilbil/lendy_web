@@ -49,7 +49,7 @@ class ConversationsDashboard extends Component {
                 <div className="row row-eq-height request-row conversation-{{ conversation.id }}">
                     <div className="col-md-3 request-header-col onhold">
                         <div className="request-header">
-                            <img alt="image" className="photo-message" src="/assets/people/1.jpg"/>
+                            <img alt="person" className="photo-message" src="/assets/people/1.jpg"/>
                             <h4>{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.</h4>
                             <p>
                                 <strong>

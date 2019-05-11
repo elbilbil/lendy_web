@@ -14,7 +14,6 @@ import SignupChoice from "./components/auth/SignupChoice";
 import Signin from "./components/auth/Signin";
 import Signup from './components/auth/Signup';
 import Signout from './components/auth/Signout';
-import Feature from "./components/feature";
 import Dashboard from "./components/Dashboard.js";
 import UpdateProfile from "./components/UpdateProfile";
 import Profile from "./components/Profile";
@@ -37,7 +36,6 @@ ReactDOM.render(
                 <Route path="/signup" exact component={SignupChoice} />
                 <Route path="/signin" exact component={Signin} />
                 <Route path="/signout" exact component={Signout} />
-                <Route path="/feature" exact component={Feature} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/update-profile" exact component={UpdateProfile} />
                 <Route path="/profile/:id" exact component={Profile} />

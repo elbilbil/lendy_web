@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import '../CSS/GME.css';
 import '../CSS/responsive.css';
 import {IoIosCheckmark} from "react-icons/io";
-import {IoMdCar} from "react-icons/io";
 import {IconContext} from "react-icons";
 import {Link} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
 import requireAuth from "./requireAuth";
 import ReactLoading from "react-loading";
+import ImageUser from "./ImageUser";
 
 class Profile extends Component {
     constructor(props) {
@@ -57,7 +57,6 @@ class Profile extends Component {
             )
         }
         else {
-            console.log(this.state);
             return (
                 <div className="wrapper" id="wrapper">
                     <section className="view-profile">
@@ -72,7 +71,7 @@ class Profile extends Component {
 
                                                 <div
                                                     className="image-bg-w285 image-bg">
-                                                    <img alt="image" className="" src="/assets/people/1.jpg"/>
+                                                    <ImageUser user={this.state.user}/>
                                                 </div>
 
                                             </figure>
@@ -130,7 +129,7 @@ class Profile extends Component {
                                                     17/03/19
                                                 </p>
                                                 <p></p>
-                                                <a type="button" className="flag-user hidden-xs btn">
+                                                <a type="button" href="#" className="flag-user hidden-xs btn">
                                                     <span className="lnr lnr-flag"></span>
                                                     Signaler l'utilisateur
                                                 </a>

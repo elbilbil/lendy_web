@@ -141,7 +141,7 @@ class Welcome extends Component {
                                         <div className="fdb-box">
                                             <div className="row">
                                                 <div className="col-8 col-sm-6 col-md-4 col-xl-3 ml-auto mr-auto">
-                                                    <img alt="image" className="img-fluid rounded"
+                                                    <img alt="people" className="img-fluid rounded"
                                                          src="/assets/people/6.jpg"/>
                                                 </div>
 
@@ -163,7 +163,7 @@ class Welcome extends Component {
                                         <div className="fdb-box">
                                             <div className="row">
                                                 <div className="col-8 col-sm-6 col-md-4 col-xl-3 ml-auto mr-auto">
-                                                    <img alt="image" className="img-fluid rounded"
+                                                    <img alt="people" className="img-fluid rounded"
                                                          src="/assets/people/8.jpg"/>
                                                 </div>
 
