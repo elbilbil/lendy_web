@@ -37,6 +37,12 @@ class Conversations extends Component {
 
     renderConvos() {
         if (this.state.conversations !== null && this.state.otherUsers.length === this.state.conversations.length) {
+            if (this.state.conversations.length === 0)
+                return (
+                    <div>
+                        <p>Aucune conversation</p>
+                    </div>
+                );
             return (
                 this.state.conversations.map((conv, index) => {
                         return (

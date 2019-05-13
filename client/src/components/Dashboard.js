@@ -119,7 +119,6 @@ class Dashboard extends Component {
                                         </div>
                                         <span className="clearfix"></span>
 
-
                                         <div className="latest_message_sec row">
                                             <div className="latest_message_sub">
                                                 <div className="latest_message_messcoll_00">
@@ -140,10 +139,10 @@ class Dashboard extends Component {
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <Link className="btn btn-primary ml-md-3" to='/profile' style={{marginBottom: '5%'}}>Mon Profil</Link>
+                                                            <Link className="btn btn-primary ml-md-3" to={`/profile/${this.props.myself.myself._id}`} style={{marginBottom: '5%'}}>Voir mon profil</Link>
                                                         </div>
                                                         <div className="col-6">
-                                                            <Link className="btn btn-primary ml-md-3" to='/update-profile'>Modifier</Link>
+                                                            <Link className="btn btn-primary ml-md-3" to='/update-profile'>Modifier mon profil</Link>
                                                         </div>
                                                     </div>
                                                 </div>

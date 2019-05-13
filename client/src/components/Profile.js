@@ -50,6 +50,19 @@ class Profile extends Component {
         }
     }
 
+    renderCity()
+    {
+        if (this.state.user.city !== null)
+            return (
+                <p>
+                    <i className="ion-location"></i>
+                    {this.state.user.city}
+                </p>
+            )
+        else
+            return '';
+    }
+
     renderProfile() {
         if (this.state.user === '') {
             return (
@@ -57,6 +70,15 @@ class Profile extends Component {
             )
         }
         else {
+            var lastConnectTemp = '';
+            var lastConnect = '';
+            var options = {year: 'numeric', month: 'numeric', day: 'numeric'};
+            if (this.state.user.lastConnection)
+            {
+                lastConnectTemp = new Date(this.state.user.lastConnection);
+                lastConnect = lastConnectTemp.toLocaleString('fr-FR', options);
+            }
+            console.log(this.state.user);
             return (
                 <div className="wrapper" id="wrapper">
                     <section className="view-profile">
@@ -76,11 +98,8 @@ class Profile extends Component {
 
                                             </figure>
 
-                                            <h2 className="hidden-md">{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.
-                                                <br/>
-                                                <small>
-                                                    Age
-                                                </small>
+                                            <h2 className="hidden-md">
+                                                {this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.
                                             </h2>
 
 
@@ -94,20 +113,18 @@ class Profile extends Component {
                                         <div className="row">
                                             <div className="col-sm-8">
                                                 <h1 className="hidden-xs hidden-sm">{this.state.user.firstname.charAt(0).toUpperCase() + this.state.user.firstname.slice(1)} {this.state.user.lastname.charAt(0).toUpperCase()}.
-                                                    <small>
+                                                    {/*<small>
                                                         23 ans
                                                     </small>
+                                                    */}
                                                 </h1>
-                                                <p>
+                                                {/*<p>
                                                     <i className="ion-thumbsup"></i>
                                                     1
                                                     avis ou recommandations,
                                                     <a href="#viewReco" className="see-more smoothAnchor">voir</a>
-                                                </p>
-                                                <p>
-                                                    <i className="ion-location"></i>
-                                                    Marseille
-                                                </p>
+                                                </p>*/}
+                                                {this.renderCity()}
                                             </div>
 
                                             <div className="col-sm-4 advert-buttons-col">
@@ -126,7 +143,7 @@ class Profile extends Component {
 
                                                 <p className="avail-status avail-away">
                                                     <strong>Dernière connexion :</strong>
-                                                    17/03/19
+                                                    {lastConnect}
                                                 </p>
                                                 <p></p>
                                                 <a type="button" href="#" className="flag-user hidden-xs btn">

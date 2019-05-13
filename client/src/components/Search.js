@@ -11,7 +11,8 @@ class Search extends Component {
         super(props);
         this.state = {
             type: '',
-            listFound:''
+            listFound:'',
+            otherAdress: null
         }
         this.search = this.search.bind(this);
     }
@@ -23,7 +24,6 @@ class Search extends Component {
                     this.setState({type: 'preteur'});
                     this.props.getDrivers(() => {
                         this.setState({listFound: this.props.drivers.drivers});
-                        console.log(this.props.drivers);
                     });
                 }
                 else {

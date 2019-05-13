@@ -7,6 +7,7 @@ import {compose} from "redux";
 import * as actions from "../actions";
 import ImgUpload from "./ImgUpload";
 import ImageUser from "./ImageUser";
+import GoogleSuggest from "./GoogleSuggest";
 
 
 class UpdateProfile extends Component {
@@ -17,7 +18,13 @@ class UpdateProfile extends Component {
             photo: null,
             myself: null,
             modifyPhoto: 0,
+            latitude: null,
+            longitude: null,
+            addresse: null,
+            city: null,
         };
+        this.setLatLng = this.setLatLng.bind(this);
+        this.setAdresse = this.setAdresse.bind(this);
         this.setPhoto = this.setPhoto.bind(this);
         this.modifyPhoto = this.modifyPhoto.bind(this);
     }
@@ -80,6 +87,19 @@ class UpdateProfile extends Component {
         if (this.state.photo !== null) {
             formProps = {...formProps, picture: this.state.photo}
         }
+        if (this.state.latitude !== null && this.state.longitude !== null)
+        {
+            formProps = {...formProps, location: {latitude: this.state.latitude, longitude: this.state.longitude}}
+        }
+        if (this.state.adresse !== null)
+        {
+            formProps = {...formProps, adresse: this.state.adresse}
+        }
+        if (this.state.city !== null)
+        {
+            formProps = {...formProps, city: this.state.city}
+        }
+
 
         this.props.updateUser(formProps, () => {
             this.onOpenModal();
@@ -94,6 +114,20 @@ class UpdateProfile extends Component {
         this.setState({modifyPhoto: 1});
     }
 
+    setLatLng(val) {
+        this.setState({
+            latitude: val.lat,
+            longitude: val.lng
+        })
+    }
+
+    setAdresse(val) {
+        this.setState({
+            adresse: val.adresse,
+            city: val.city
+        });
+    }
+
     photoSection() {
         if (this.state.myself !== null) {
             if (this.state.myself.picture && this.state.modifyPhoto === 0) {
@@ -102,7 +136,8 @@ class UpdateProfile extends Component {
                         <h3>Votre photo de profil</h3>
                         <ImageUser user={this.state.myself}/>
                         <br/>
-                        <button className="btn btn-secondary" type="button" onClick={this.modifyPhoto}>Modifiez votre photo
+                        <button className="btn btn-secondary" type="button" onClick={this.modifyPhoto}>Modifiez votre
+                            photo
                         </button>
                     </div>
                 )
@@ -116,6 +151,32 @@ class UpdateProfile extends Component {
                     </div>
                 )
             }
+        }
+    }
+
+    renderAdresse() {
+        if (this.props.myself.myself === null || !this.props.myself.myself.adresse) {
+            return (
+                <div className="col mt-4" style={{paddingLeft: "0"}}>
+                    <p>Votre adresse</p>
+                    <GoogleSuggest
+                        setLatLng={this.setLatLng}
+                        setAdresse={this.setAdresse}
+                    />
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="col mt-4" style={{paddingLeft: "0"}}>
+                    <p>Votre adresse</p>
+                    <GoogleSuggest
+                        setLatLng={this.setLatLng}
+                        setAdresse={this.setAdresse}
+                        value={this.props.myself.myself.adresse}
+                    />
+                </div>
+            )
         }
     }
 
@@ -197,6 +258,7 @@ class UpdateProfile extends Component {
                                         />
                                     </fieldset>
                                 </div>
+                                {this.renderAdresse()}
                                 <div>
                                     {this.props.errorMessage}
                                 </div>

@@ -11,6 +11,10 @@ export default class GoogleSuggest extends React.Component {
             search: "",
             value: "",
         }
+        this.getValue = this.getValue.bind(this);
+    }
+
+    componentDidMount() {
     }
 
     handleInputChange = e => {
@@ -18,7 +22,6 @@ export default class GoogleSuggest extends React.Component {
     }
 
     handleSelectSuggest = (geocodedPrediction, originalPrediction) => {
-       // this.props.callback(geocodedPrediction.geometry.location.lat(), geocodedPrediction.geometry.location.lng());
         this.setState({search: "", value: geocodedPrediction.formatted_address})
         if (this.props.setLatLng) {
             this.props.setLatLng({
@@ -26,6 +29,36 @@ export default class GoogleSuggest extends React.Component {
                 lng: geocodedPrediction.geometry.location.lng()
             });
         }
+
+        if (this.props.checkAdressSearch)
+        {
+            this.props.checkAdressSearch(geocodedPrediction.formatted_address);
+        }
+        if (this.props.setAdresse)
+        {
+
+            geocodedPrediction.address_components.map((ad, index) => {
+                ad.types.map(types => {
+                    if (types === 'locality') {
+                        this.props.setAdresse(
+                            {
+                                adresse: geocodedPrediction.formatted_address,
+                                city : geocodedPrediction.address_components[index].long_name
+                            }
+                        )
+                    }
+                });
+            });
+        }
+    }
+
+    getValue(){
+        if (this.props.value && this.state.value === "")
+        {
+            this.setState({value: this.props.value});
+            return this.props.value;
+        }
+        return '';
     }
 
     render() {
@@ -71,6 +104,7 @@ export default class GoogleSuggest extends React.Component {
                                 </div>
                             )}
                         >
+                            {this.getValue()}
                             <input
                                 className="form-control google-search"
                                 type="text"

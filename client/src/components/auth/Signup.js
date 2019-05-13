@@ -3,16 +3,22 @@ import {reduxForm, Field} from 'redux-form';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import * as actions from '../../actions';
-import ImageUser from "../ImageUser";
 import ImgUpload from "../ImgUpload";
+import GoogleSuggest from "../GoogleSuggest";
 
 class Signup extends Component {
     constructor(props){
         super(props);
         this.state = {
-            type: null
+            type: null,
+            latitude: null,
+            longitude: null,
+            addresse: null,
+            city: null,
         };
         this.setPhoto = this.setPhoto.bind(this);
+        this.setLatLng = this.setLatLng.bind(this);
+        this.setAdresse = this.setAdresse.bind(this);
     }
     componentDidMount() {
         const myType = this.props.match.params.type;
@@ -25,9 +31,16 @@ class Signup extends Component {
         if (this.state.photo !== null) {
             formProps = {...formProps, picture: this.state.photo}
         }
+        if (this.state.adresse !== null && this.state.city !== null && this.state.latitude !== null && this.state.longitude !== null)
+        {
+            formProps = {
+                ...formProps,
+                adresse: this.state.adresse,
+                city: this.state.city,
+            }
+        }
         formProps = {
             ...formProps,
-            address: ' ',
             type: this.state.type
         };
         //console.log(formProps);
@@ -51,6 +64,21 @@ class Signup extends Component {
     setPhoto(photoRes) {
         this.setState({photo: photoRes});
     }
+
+    setLatLng(val){
+        this.setState({
+            latitude: val.lat,
+            longitude: val.lng
+        })
+    }
+
+    setAdresse(val){
+        this.setState({
+            adresse: val.adresse,
+            city: val.city
+        });
+    }
+
 
     render(){
         const {handleSubmit} = this.props;
@@ -114,8 +142,14 @@ class Signup extends Component {
                                                 />
                                             </fieldset>
                                         </div>
+                                        <div className="col mt-4" style={{paddingLeft : "0"}}>
+                                            <GoogleSuggest
+                                                setLatLng={this.setLatLng}
+                                                setAdresse={this.setAdresse}
+                                            />
+                                        </div>
                                         <div>
-                                            <h3>Ajoutez une photo de profil</h3>
+                                            <p>Ajoutez une photo de profil</p>
                                             <ImgUpload setPhoto={this.setPhoto}/>
                                         </div>
                                         <div>

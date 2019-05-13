@@ -2588,17 +2588,21 @@ select::-ms-expand {
 }
 
 .slick-slide {
-  height:200px;
+  height:600px;
 }
 
 
 .slick-slide img {
-  height:300px;
+  height:400px;
 }
 
 .myCenter{
   top: 50%;
   margin-left:48%;
+}
+
+.fdb-box .img-fluid {
+  width: 400px;
 }
 
 @media (height:300px){.legal-login,.photo-cred-login{display:none}}
