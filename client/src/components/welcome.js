@@ -14,7 +14,7 @@ class Welcome extends Component {
     render() {
         return (
             <div>
-                <div className="fdb-block fdb-viewport bg-dark"
+                <div className="fdb-block fdb-viewport bg-dark header-home"
                      style={{backgroundImage: 'url(assets/img/slider_home.jpg)'}}>
                     <div className="container front-page-title">
                         <div className="container align-self-center">
@@ -52,7 +52,7 @@ class Welcome extends Component {
                             <div className="row">
                                 <div className="col-sm-6 col-md-6 col-xl-6">
                                     <figure data-animate="ts-fadeInUp">
-                                        <figure className="icon mb-5 p-2">
+                                        <figure className="mb-5 p-2">
                                             <img src='assets/img/wheel.png' alt=""/>
                                             <div className="ts-svg" data-animate="ts-zoomInShort"
                                                  data-bg-image='/assets/svg/organic-shape-01.svg'></div>
@@ -70,7 +70,7 @@ class Welcome extends Component {
 
                                 <div className="col-sm-6 col-md-6 col-xl-6">
                                     <figure data-animate="ts-fadeInUp" data-delay="0.1s">
-                                        <figure className="icon mb-5 p-2">
+                                        <figure className="mb-5 p-2">
                                             <img src='/assets/img/handshake.png' alt=""/>
                                             <div className="ts-svg" data-animate="ts-zoomInShort"
                                                  data-bg-image='/assets/svg/organic-shape-02.svg'></div>

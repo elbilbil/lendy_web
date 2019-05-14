@@ -2605,4 +2605,8 @@ select::-ms-expand {
   width: 400px;
 }
 
+.header-home {
+  padding: 5rem 0 13.5rem 0 !important;
+}
+
 @media (height:300px){.legal-login,.photo-cred-login{display:none}}
