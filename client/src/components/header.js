@@ -30,11 +30,11 @@ class Header extends Component{
                 <div className="collapse navbar-collapse navbar-collapse-4">
                     <ul className="navbar-nav ml-auto justify-content-end">
                         <li className="nav-item">
-                            <Link name="btnConnect" className="btn btn-primary ml-md-3" to='/signin'>Se connecter</Link>
+                            <a name="btnConnect"  target="_blank" className="btn btn-primary ml-md-3" href='https://www.apple.com/fr/ios/app-store/'>Obtenir sur l'app Store</a>
                         </li>
                     </ul>
 
-                    <Link name="btnCreateAccount" className="btn btn-primary ml-md-3" to='/signup'>Créer un compte</Link>
+                    <a name="btnConnect"  target="_blank" className="btn btn-primary ml-md-3" href='https://play.google.com/store/apps?hl=fr'>Obtenir sur le Play Store</a>
                 </div>
             );
         }

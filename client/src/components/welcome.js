@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 
 class Welcome extends Component {
-    componentDidMount(){
-        if (this.props.authenticated)
-        {
+    componentDidMount() {
+        if (this.props.authenticated) {
             this.props.history.push('/dashboard');
         }
     }
@@ -62,9 +61,10 @@ class Welcome extends Component {
                                             Vous avez du temps à consacrer à la plateforme, et vous voulez récuperer un
                                             véhicule en échange?
                                         </p>
-                                        <Link to='/signup/drivers'
-                                              name="btnDriver"
-                                              className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
+                                        <a target="_blank"
+                                           name="btnDriver"
+                                           href="https://play.google.com/store/apps?hl=fr"
+                                           className="btn btn-primary mb-4 ts-scroll">S'inscrire</a>
                                     </figure>
                                 </div>
 
@@ -81,9 +81,10 @@ class Welcome extends Component {
                                             en
                                             échange d'un chauffeur !
                                         </p>
-                                        <Link to='/signup/lenders'
-                                              name="btnLender"
-                                              className="btn btn-primary mb-4 ts-scroll">S'inscrire</Link>
+                                        <a href="https://play.google.com/store/apps?hl=fr"
+                                           target="_blank"
+                                           name="btnLender"
+                                           className="btn btn-primary mb-4 ts-scroll">S'inscrire</a>
                                     </figure>
                                 </div>
 
@@ -111,8 +112,9 @@ class Welcome extends Component {
                                         personnes et permet de résoudre leurs besoins.
                                     </p>
 
-                                    <Link to='/signup'
-                                          className="btn btn-primary mb-4 ts-scroll">Je m'inscris!</Link>
+                                    <a href="https://play.google.com/store/apps?hl=fr"
+                                       className="btn btn-primary mb-4 ts-scroll"
+                                       target="_blank">Je m'inscris!</a>
                                 </div>
 
                                 <div className="col-md-7 col-xl-7 text-center" data-animate="ts-fadeInUp"
@@ -194,12 +196,18 @@ class Welcome extends Component {
                                         <div className="bg-white p-5 ts-border-radius__round-shape">
                                             <div className="row">
                                                 <div className="col-md-6">
-                                                    <img src='/assets/img/download-appstore.png'
-                                                         className="mw-100 py-3" alt=""/>
+                                                    <a href="https://www.apple.com/fr/ios/app-store/"
+                                                       target="_blank">
+                                                        <img src='/assets/img/download-appstore.png'
+                                                             className="mw-100 py-3" alt=""/>
+                                                    </a>
                                                 </div>
                                                 <div className="col-md-6">
+                                                    <a href="https://play.google.com/store/apps?hl=fr"
+                                                       target="_blank">
                                                     <img src='/assets/img/download-play.png'
                                                          className="mw-100 py-3" alt=""/>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,8 +225,8 @@ class Welcome extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return {authenticated : state.auth.authenticated }
+function mapStateToProps(state) {
+    return {authenticated: state.auth.authenticated}
 }
 
 export default connect(mapStateToProps)(Welcome);
