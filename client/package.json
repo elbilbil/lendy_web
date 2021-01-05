@@ -11,7 +11,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "capitalize": "^2.0.0",
     "froala-design-blocks": "github:froala/design-blocks#dev",
     "jquery": "^3.3.1",
